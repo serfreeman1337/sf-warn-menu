@@ -1,0 +1,31 @@
+[ru]
+WARN_MENU1 = Предупреждение игроку
+WARN_MENU2 = Выберите причину
+WARN_MENU3 = Подтвердите действие
+WARN_TXT1 = Причина
+WARN_TXT2 = ->>> \rВыкинуть
+WARN_TXT3 = ->>> \rВыдать предупреждение
+WARN_TXT4 = ^1Админ выдал предупреждение ^3%s^1. Причина: ^4%L^1 [^3%d^1/^3%d^1]
+WARN_TXT5 = ^1Админ ^4%s^1 выдал предупреждение ^3%s^1. Причина: ^3%L^1 [^3%d^1/^3%d^1]
+WARN_TXT6 = ^1Админ кикнул ^3%s^1. Причина: ^4%L^1
+WARN_TXT7 = ^1Админ ^4%s^1 кикнул ^3%s^1. Причина: ^3%L^1
+WARN_TXT8 = Вам выдано предупреждение %d из %d^nПричина: %L
+WARN_TXT9 = Вам выдано предупреждение %d из %d^nАдмин: %s^nПричина: %L
+WARN_SELF = Своя причина
+WARN_NULL = %s
+
+[en]
+WARN_MENU1 = Warn Player
+WARN_MENU2 = Warn Reason
+WARN_MENU3 = Confirm action
+WARN_SELF = Input your own reason
+WARN_TXT1 = Reason
+WARN_TXT2 = ->>> \rKick
+WARN_TXT3 = ->>> \rWarn player
+WARN_TXT4 = ^1ADMIN: warn ^3%s^1 for ^4%L^1 [^3%d^1/^3%d^1]
+WARN_TXT5 = ^1ADMIN ^4%s^1: warn ^3%s^1 for ^4%L^1 [^3%d^1/^3%d^1]
+WARN_TXT6 = ^1ADMIN: kick ^3%s^1 for ^4%L^
+WARN_TXT7 = ^1ADMIN ^4%s^1: kick ^3%s^1 for ^4%L^1
+WARN_TXT8 = You have been warned %d from %d^nReason: %L
+WARN_TXT9 = You have been warned %d from %d^nAdmin: %s^nReason: %L
+WARN_NULL = %s
