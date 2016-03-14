@@ -1,5 +1,5 @@
 /*
-*	SF Warn Menu			       v. 0.1.1
+*	SF Warn Menu			       v. 0.1.2
 *	by serfreeman1337		http://1337.uz/
 */
 
@@ -12,7 +12,7 @@
 #include <amxmisc>
 
 #define PLUGIN "SF Warn Menu"
-#define VERSION "0.1.1"
+#define VERSION "0.1.2"
 #define AUTHOR "serfreeman1337"
 
 #if AMXX_VERSION_NUM < 183
@@ -199,17 +199,20 @@ public Menu_ReasonConfirm(id,target,reason_id)
 	new target_name[MAX_NAME_LENGTH]
 	get_user_name(target,target_name,charsmax(target_name))
 	
-	new info[3]
+	new info[6]
 	
 	info[0] = 'c'
 	info[1] = target
-	info[2] = reason_id
+	info[3] = reason_id
 	
 	// 1. Игрок
+	info[2] = 1
 	formatex(fmt,charsmax(fmt),"%L \y%s\w",id,"PLAYER",target_name)
 	menu_additem(menu,fmt,info)
 	
 	// 2. Причина
+	info[2] = 2
+	
 	if(reason_id == 0)
 	{
 		formatex(fmt,charsmax(fmt),"%L \y%s\w",id,"WARN_TXT1",players_data[id][PLAYER_TARGET_REASON])
@@ -219,16 +222,26 @@ public Menu_ReasonConfirm(id,target,reason_id)
 		new reason_info[reasons_struct]
 		ArrayGetArray(reasons_array,reason_id,reason_info)
 		
-		formatex(fmt,charsmax(fmt),"%L \y%s\w",id,"WARN_TXT1",reason_info[REASON_NAME])
+		// ML
+		if(strfind(reason_info[REASON_NAME],"WARN_") == 0)
+		{
+			formatex(fmt,charsmax(fmt),"%L \y%L\w",id,"WARN_TXT1",id,reason_info[REASON_NAME])
+		}
+		else
+		{
+			formatex(fmt,charsmax(fmt),"%L \y%s\w",id,"WARN_TXT1",reason_info[REASON_NAME])
+		}
 	}
 	
 	menu_additem(menu,fmt,info)
 	
 	// 3. Действие
+	info[2] = 3
 	formatex(fmt,charsmax(fmt),"%L",id,"WARN_TXT2")
-	menu_additem(menu,fmt,info)
+	menu_additem(menu,fmt,info,ADMIN_RCON)
 	
 	// 4. Предупреждение
+	info[2] = 4
 	formatex(fmt,charsmax(fmt),"%L",id,"WARN_TXT3")
 	menu_additem(menu,fmt,info)
 	
@@ -308,26 +321,26 @@ public MenuHandler_Global(id,menu,item)
 		}
 		case 'c':
 		{
-			switch(item)
+			switch(info[2])
 			{
 				// возвращаем в меню выбора игрока
-				case 0:
+				case 1:
 				{
 					Menu_PlayersList(id)
 				}
 				// возвращаем в меню выбора причины
-				case 1:
+				case 2:
 				{
 					Menu_ReasonsList(id,player)
 				}
 				// выполняем действие сразу
-				case 2:
-				{
-					Warn_PerformAction(id,player,info[2],true)
-				}
 				case 3:
 				{
-					Warn_PerformAction(id,player,info[2],false)
+					Warn_PerformAction(id,player,info[3],true)
+				}
+				case 4:
+				{
+					Warn_PerformAction(id,player,info[3],false)
 				}
 			}
 		}
@@ -439,8 +452,8 @@ public Warn_PerformAction(id,target,reason_id,bool:is_action)
 		if(target_warns >= max_warns)
 		{
 			is_action = true
+			TrieDeleteKey(warns_trie,target_ip) // сбрасываем счетчик предупреждений
 		}
-		
 		
 		log_amx("Warn: ^"%s<%d><%s><>^" warn ^"%s<%d><%s><>^" for ^"%s^" [%d/%d]",
 			admin_name,get_user_userid(id),admin_steamid,
@@ -600,7 +613,7 @@ public Warn_PerformAction(id,target,reason_id,bool:is_action)
 		)
 	}
 
-	return Menu_PlayersList(id)
+	return PLUGIN_HANDLED
 }
 
 public CmdHook_WarnMenu(id,level,cid)
