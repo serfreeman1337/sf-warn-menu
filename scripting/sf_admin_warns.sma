@@ -1,5 +1,5 @@
 /*
-*	SF Warn Menu			       v. 0.1.2
+*	SF Warn Menu			       v. 0.1.3
 *	by serfreeman1337		http://1337.uz/
 */
 
@@ -12,7 +12,7 @@
 #include <amxmisc>
 
 #define PLUGIN "SF Warn Menu"
-#define VERSION "0.1.2"
+#define VERSION "0.1.3"
 #define AUTHOR "serfreeman1337"
 
 #if AMXX_VERSION_NUM < 183
@@ -55,9 +55,7 @@ new Array:reasons_array
 new Trie:warns_trie
 new hud_warn
 
-
-
-public plugin_init()
+public plugin_precache()
 {
 	register_plugin(PLUGIN,VERSION,AUTHOR)
 	
@@ -82,6 +80,7 @@ public plugin_init()
 	
 	// huyak huyak and production
 	server_cmd("sf_warn_add WARN_SELF")
+	server_exec()
 	
 	warns_trie = TrieCreate()
 }
@@ -690,6 +689,12 @@ public CmdHook_WarnAdd()
 			{
 				strtok(cmd_str,reason_info[REASON_NAME],charsmax(reason_info[REASON_NAME]),cmd_str,charsmax(cmd_str),';')
 				copy(reason_info[REASON_HUD],charsmax(reason_info[REASON_HUD]),reason_info[REASON_NAME])
+			
+				// huyak huyak and production fix
+				if(strcmp(reason_info[REASON_NAME],"WARN_SELF") == 0 && reasons_array && ArraySize(reasons_array))
+				{
+					return
+				}
 			}
 			// название причины в HUD
 			case 1:
