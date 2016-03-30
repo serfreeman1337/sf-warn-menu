@@ -1,5 +1,5 @@
 /*
-*	SF Warn Menu			       v. 0.1.3
+*	SF Warn Menu			       v. 0.1.4
 *	by serfreeman1337		http://1337.uz/
 */
 
@@ -12,7 +12,7 @@
 #include <amxmisc>
 
 #define PLUGIN "SF Warn Menu"
-#define VERSION "0.1.3"
+#define VERSION "0.1.4"
 #define AUTHOR "serfreeman1337"
 
 #if AMXX_VERSION_NUM < 183
@@ -38,7 +38,10 @@ enum _:reasons_struct
 enum _:plugin_cvars
 {
 	CVAR_DEF_ACT,
-	CVAR_DEF_WARNS
+	CVAR_DEF_WARNS,
+	
+	// 0.1.4
+	CVAR_DEF_ACT2
 }
 
 enum _:player_data_struct
@@ -69,7 +72,7 @@ public plugin_precache()
 	hud_warn = CreateHudSyncObj()
 	
 	//
-	// Действите, которое будет выполнено по дефолту
+	// Команда, которую выполнит сервер по достижению лимита предупреждений
 	//
 	cvar[CVAR_DEF_ACT] = register_cvar("sf_warn_defact","kick [userid] [reason]")
 	
@@ -77,6 +80,11 @@ public plugin_precache()
 	// Макс. кол-во предупреждений
 	//
 	cvar[CVAR_DEF_WARNS] = register_cvar("sf_warn_max","3")
+	
+	//
+	// Команда, которую выполнит сервер по нажатию в меню
+	//
+	cvar[CVAR_DEF_ACT2] = register_cvar("sf_warn_defact2","kick [userid] [reason]")
 	
 	// huyak huyak and production
 	server_cmd("sf_warn_add WARN_SELF")
@@ -589,7 +597,7 @@ public Warn_PerformAction(id,target,reason_id,bool:is_action)
 			formatex(reason_for_target,charsmax(reason_for_target),reason_info[REASON_NAME])
 		}
 		
-		get_pcvar_string(cvar[CVAR_DEF_ACT],action_string,charsmax(action_string))
+		get_pcvar_string(cvar[is_action ? CVAR_DEF_ACT2 : CVAR_DEF_ACT],action_string,charsmax(action_string))
 		
 		new target_authid[36],target_userid[10]
 		
