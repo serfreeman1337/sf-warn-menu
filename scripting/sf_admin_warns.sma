@@ -1,5 +1,5 @@
 /*
-*	SF Warn Menu			       v. 0.1.4
+*	SF Warn Menu			       v. 0.1.4e
 *	by serfreeman1337		http://1337.uz/
 */
 
@@ -12,7 +12,7 @@
 #include <amxmisc>
 
 #define PLUGIN "SF Warn Menu"
-#define VERSION "0.1.4"
+#define VERSION "0.1.4e"
 #define AUTHOR "serfreeman1337"
 
 #if AMXX_VERSION_NUM < 183
@@ -402,7 +402,7 @@ Menu_PostFormat(id,menu)
 //
 // Предупреждаем или кикаем
 //
-public Warn_PerformAction(id,target,reason_id,bool:is_action)
+public Warn_PerformAction(id,target,reason_id,is_action)
 {
 	// всякие проверки
 	if(!is_user_connected(target))
@@ -458,7 +458,7 @@ public Warn_PerformAction(id,target,reason_id,bool:is_action)
 		
 		if(target_warns >= max_warns)
 		{
-			is_action = true
+			is_action = 2
 			TrieDeleteKey(warns_trie,target_ip) // сбрасываем счетчик предупреждений
 		}
 		
@@ -474,17 +474,24 @@ public Warn_PerformAction(id,target,reason_id,bool:is_action)
 	new wkey1[12],wkey2[12],wkey3[12]
 	
 	// huyak huyak and production
-	if(!is_action)
+	switch(is_action)
 	{
-		copy(wkey1,charsmax(wkey1),"WARN_TXT4")
-		copy(wkey2,charsmax(wkey2),"WARN_TXT5")
-		copy(wkey3,charsmax(wkey3),"WARN_TXT8")
-	
-	}
-	else
-	{
-		copy(wkey1,charsmax(wkey1),"WARN_TXT6")
-		copy(wkey2,charsmax(wkey2),"WARN_TXT7")
+		case 1:
+		{
+			copy(wkey1,charsmax(wkey1),"WARN_TXT6")
+			copy(wkey2,charsmax(wkey2),"WARN_TXT7")
+		}
+		case 2:
+		{
+			copy(wkey1,charsmax(wkey1),"WARN_TXT10")
+			copy(wkey2,charsmax(wkey2),"WARN_TXT11")
+		}
+		default:
+		{
+			copy(wkey1,charsmax(wkey1),"WARN_TXT4")
+			copy(wkey2,charsmax(wkey2),"WARN_TXT5")
+			copy(wkey3,charsmax(wkey3),"WARN_TXT8")
+		}
 	}
 	
 	// с поддержкой ML

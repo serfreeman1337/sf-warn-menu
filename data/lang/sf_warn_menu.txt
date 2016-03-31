@@ -13,6 +13,8 @@ WARN_TXT8 = Вам выдано предупреждение %d из %d^nПри�
 WARN_TXT9 = Вам выдано предупреждение %d из %d^nАдмин: %s^nПричина: %L
 WARN_SELF = Своя причина
 WARN_NULL = %s
+WARN_TXT10 = ^1Админ кикнул ^3%s^1. Причина: ^4%L^1
+WARN_TXT11 = ^1Админ ^4%s^1 кикнул ^3%s^1. Причина: ^3%L^1
 
 [en]
 WARN_MENU1 = Warn Player
@@ -29,3 +31,5 @@ WARN_TXT7 = ^1ADMIN ^4%s^1: kick ^3%s^1 for ^4%L^1
 WARN_TXT8 = You have been warned %d from %d^nReason: %L
 WARN_TXT9 = You have been warned %d from %d^nAdmin: %s^nReason: %L
 WARN_NULL = %s
+WARN_TXT10 = ^1ADMIN: kick ^3%s^1 for ^4%L^
+WARN_TXT11 = ^1ADMIN ^4%s^1: kick ^3%s^1 for ^4%L^1
