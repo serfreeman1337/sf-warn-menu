@@ -1,5 +1,5 @@
 /*
-*	SF Warn Menu			       v. 0.1.4e
+*	SF Warn Menu			       v. 0.1.4f
 *	by serfreeman1337		http://1337.uz/
 */
 
@@ -12,7 +12,7 @@
 #include <amxmisc>
 
 #define PLUGIN "SF Warn Menu"
-#define VERSION "0.1.4e"
+#define VERSION "0.1.4f"
 #define AUTHOR "serfreeman1337"
 
 #if AMXX_VERSION_NUM < 183
@@ -604,7 +604,7 @@ public Warn_PerformAction(id,target,reason_id,is_action)
 			formatex(reason_for_target,charsmax(reason_for_target),reason_info[REASON_NAME])
 		}
 		
-		get_pcvar_string(cvar[is_action ? CVAR_DEF_ACT2 : CVAR_DEF_ACT],action_string,charsmax(action_string))
+		get_pcvar_string(cvar[(is_action == 2? CVAR_DEF_ACT2 : CVAR_DEF_ACT)],action_string,charsmax(action_string))
 		
 		new target_authid[36],target_userid[10]
 		
