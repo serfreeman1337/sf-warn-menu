@@ -1,5 +1,5 @@
 /*
-*	SF Warn Menu			       v. 0.1.4f
+*	SF Warn Menu			       v. 0.1.4g
 *	by serfreeman1337		http://1337.uz/
 */
 
@@ -12,7 +12,7 @@
 #include <amxmisc>
 
 #define PLUGIN "SF Warn Menu"
-#define VERSION "0.1.4f"
+#define VERSION "0.1.4g"
 #define AUTHOR "serfreeman1337"
 
 #if AMXX_VERSION_NUM < 183
@@ -263,7 +263,7 @@ public Menu_ReasonConfirm(id,target,reason_id)
 //
 public MenuHandler_Global(id,menu,item)
 {
-	if(item == MENU_EXIT || (menu_items(menu) == 10 && item == 9))
+	if(item == MENU_EXIT)
 	{
 		menu_destroy(menu)
 		return PLUGIN_HANDLED
@@ -271,6 +271,14 @@ public MenuHandler_Global(id,menu,item)
 	
 	new paccess,info[6],dummy
 	menu_item_getinfo(menu,item,paccess,info,charsmax(info),.callback = dummy)
+	
+	#if AMXX_VERSION_NUM < 183
+	if(info[0] == 'e')
+	{
+		menu_destroy(menu)
+		return PLUGIN_HANDLED
+	}
+	#endif
 	
 	new player = info[1]
 	
